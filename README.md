@@ -13,6 +13,8 @@ alias mkdir="mkdir -p"
 alias histg="history | grep"
 alias myip="curl http://ipecho.net/plain; echo"
 alias gitgraph="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+alias gcleanup='git branch --merged | grep -v "\*" | grep -v "master" | xargs -n 1 git branch -d'
+alias greset='git checkout master && git pull && git remote prune origin && gcleanup'
 
 ~~~~
 
@@ -63,8 +65,14 @@ fi
 
 
 ~~~~
-#############
-#PS1 w/ git #
-#############
-PS1='\n\[\e[1;37m\]|-- \[\e[1;32m\]\u\[\e[0;39m\]@\[\e[1;36m\]\h\[\e[0;39m\]:\[\e[1;33m\]\w\[\e[0;39m\]\[\e[1;32m\]$(__git_ps1 " (%s)")\[\e[0;39m\] \[\e[1;37m\]--|\[\e[0;39m\]\n$'
+#####################
+#PS1 w/ git and k8s #
+#####################
+source /home/paul/work/go_projects/src/github.com/jonmosco/kube-ps1/kube-ps1.sh
+PS1='\n \[\e[1;37m\]|-- \[\e[1;32m\]\u\[\e[0;39m\]@\[\e[1;36m\]\h\[\e[0;39m\]:$(kube_ps1) \[\e[1;33m\]\w\[\e[0;39m\]\[\e[1;32m\]$(__git_ps1 " (%s)")\[\e[0;39m\] \[\e[1;37m\]--|\[\e[0;39m\]\n$'
+
+############
+#direnv    #
+############
+eval "$(direnv hook bash)"
 ~~~~
