@@ -14,7 +14,8 @@ alias histg="history | grep"
 alias myip="curl http://ipecho.net/plain; echo"
 alias gitgraph="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 alias gcleanup='git branch --merged | grep -v "\*" | grep -v "master" | xargs -n 1 git branch -d'
-alias greset='git checkout master && git pull && git remote prune origin && gcleanup'
+alias gmain="git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'"
+alias greset='git checkout $(gmain) && git pull && git remote prune origin && gcleanup'
 
 ~~~~
 
